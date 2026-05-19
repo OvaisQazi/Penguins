@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+env/
+
+# macOS
+.DS_Store
+
+# Package distribution
+build/
+dist/
+*.egg-info/
+
+# Editor files
+*.swp
+*.swo
+.idea/
+.vscode/
+
+#plots
+training_curves.png
