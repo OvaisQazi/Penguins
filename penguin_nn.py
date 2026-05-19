@@ -57,7 +57,7 @@ print(f"A1: {n1}x{n0}={n0*n1}  b1: {n1}  A2: {n2}x{n1}={n1*n2}  b2: {n2}")
 # training loop
 
 lr = 0.05
-iter = 1000
+iter = 5000
 ss_sgd = 1e-6
 
 loss_history, grad_norm_history, wvec = nn(lr, iter, ss_sgd, wvec, x_train, y_train)
