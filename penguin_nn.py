@@ -1,8 +1,7 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import approx_fprime
-from functions import wvec_to_wmats, fwdnn, sqrdloss, nn, predict, n0, n1, n2
+from functions import nn, predict, n0, n1, n2
 
 # loading data
 with open('penguin-data.json', 'r') as f:
@@ -36,7 +35,7 @@ for k, v in mplbldict.items():
     print(f"{datadict['target_names'][k]:10s} ({k}) → {v}")
 
 # splitting train and test data
-np.random.seed(69)
+# np.random.seed(69) # if you want to not change the randomness
 N = data.shape[0]
 index = np.random.permutation(N)
 split = int(0.9 * N)
