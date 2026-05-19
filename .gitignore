@@ -19,6 +19,3 @@ dist/
 *.swo
 .idea/
 .vscode/
-
-#plots
-training_curves.png
