@@ -12,6 +12,7 @@ data = np.array(datadict['data'])
 
 # subtract mean per feature (column)
 data -= data.mean(axis = 0)
+data /= data.std(axis = 0)
 
 # extract labels
 lbls = np.array(datadict['target'])
