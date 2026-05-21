@@ -4,7 +4,7 @@ from scipy.optimize import approx_fprime
 
 # neural network dimensions
 n0 = 4 # number of features = input layer
-n1 = 8 # middle layer
+n1 = 20 # middle layer
 n2 = 3 # number of labels = output layer
 
 # changing vector of weights into matrices
