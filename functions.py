@@ -35,25 +35,31 @@ def sqrdloss(wvec, x=None, y=None):
     return np.sum((y - y_pred) ** 2)
 
 # training loop
-def nn(lr, iter, ss_sgd, wvec, x_train, y_train):
+def nn(lr, epochs, ss_sgd, wvec, x_train, y_train, batch_size):
     lh = []
     gnh = []
-    for i in range(iter):
-        ind = np.random.randint(len(x_train))
-        x = x_train[ind]
-        y = y_train[ind]
+    n = len(x_train)
 
-        grad = approx_fprime(wvec, sqrdloss, ss_sgd, x, y)
+    for i in range(epochs):
+        p = np.random.permutation(n)
+        x_train = x_train[p]
+        y_train = y_train[p]
 
-        wvec -= lr * grad
+        for j in range(0, n, batch_size):
+            x_batch = x_train[j : j+batch_size]
+            y_batch = y_train[j : j+batch_size]
+            
+            grad = np.mean(np.array([approx_fprime(wvec, sqrdloss, ss_sgd, x_batch[k], y_batch[k])
+                for k in range(len(x_batch))]), axis = 0)
 
-        if i % 100 == 0:
-            total_loss = np.mean([sqrdloss(wvec, x_train[j], y_train[j]) for j in range(len(x_train))])
-            grad_norm = np.linalg.norm(grad)
-            lh.append(total_loss)
-            gnh.append(grad_norm)
+            wvec -= lr * grad
+        
+        total_loss = np.mean([sqrdloss(wvec, x_train[j], y_train[j]) for j in range(len(x_train))])
+        grad_norm = np.linalg.norm(grad)
+        lh.append(total_loss)
+        gnh.append(grad_norm)
 
-            print(f"iter {i:5d} | loss = {total_loss:.4f} | ||grad|| = {grad_norm:.4f}")
+        print(f"epoch {i:5d} | loss = {total_loss:.4f} | ||grad|| = {grad_norm:.4f}")    
 
     print("Training done")
 

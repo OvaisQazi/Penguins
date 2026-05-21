@@ -57,10 +57,11 @@ print(f"A1: {n1}x{n0}={n0*n1}  b1: {n1}  A2: {n2}x{n1}={n1*n2}  b2: {n2}")
 # training loop
 
 lr = 0.05 # learning rate
-iter = 5000 # iteration
+epochs = 100 # iteration = epochs * (size of array // batch_size)
 ss_sgd = 1e-6 # step size for sgd
+batch_size = 10
 
-loss_history, grad_norm_history, wvec = nn(lr, iter, ss_sgd, wvec, x_train, y_train)
+loss_history, grad_norm_history, wvec = nn(lr, epochs, ss_sgd, wvec, x_train, y_train, batch_size)
 
 # testing
 
@@ -81,23 +82,22 @@ for k, name in enumerate(datadict['target_names']):
     acc_k = np.mean(y_pred_int[mask] == k)
     print(f"  {name:10s}: {acc_k * 100:.1f}%  ({mask.sum()} samples)")
 
-# ploting
+# plotting
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
- 
-steps = np.arange(len(loss_history)) * 100
- 
-ax1.plot(steps, loss_history, color='steelblue')
-ax1.set_xlabel('SGD iteration')
+epochs = np.arange(len(loss_history))  # one entry per epoch
+
+ax1.plot(epochs, loss_history, color='steelblue')
+ax1.set_xlabel('Epoch')
 ax1.set_ylabel('Mean squared loss')
 ax1.set_title('Training Loss')
 ax1.grid(True, alpha=0.3)
- 
-ax2.plot(steps, grad_norm_history, color='coral')
-ax2.set_xlabel('SGD iteration')
+
+ax2.plot(epochs, grad_norm_history, color='coral')
+ax2.set_xlabel('Epoch')
 ax2.set_ylabel('||gradient||')
 ax2.set_title('Gradient Norm')
 ax2.grid(True, alpha=0.3)
- 
+
 plt.tight_layout()
 plt.savefig('training_curves.png', dpi=150)
 print("\nPlot saved to training_curves.png")
